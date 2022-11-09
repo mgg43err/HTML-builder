@@ -1,20 +1,48 @@
 const path = require("node:path");
 const fs = require("node:fs");
-//const fs = require("node:fs/promises");
+const fsp = require("fs/promises");
 
 const inputFilesPath = path.join(__dirname + "/files/");
 const outputFilescopyPath = path.join(__dirname + "/files-copy/");
 
-fs.stat(outputFilescopyPath, function (err) {
-	if (!err) {
-		console.log("Directory exist");
-		//fs.promises.readdir(SECRET_FOLDER, {withFileTypes: true});
-	} else if (err.code === "ENOENT") {
-		console.log("Directory does not exist");
-		fs.mkdir(outputFilescopyPath, () => {
-			console.log("directory has been created");
+const mv = function (src, dest) {
+	return fsp
+		.readdir(src, {withFileTypes: true})
+		.then(f => {
+			f.map(x => {
+				fs.copyFile(
+					path.join(src + x.name),
+					path.join(dest + x.name),
+					function cb(err) {
+						if (err) throw err;
+					}
+				);
+			});
+		})
+		.catch(err => {
+			console.log(err);
 		});
-	}
-});
+};
 
-console.log(inputFilesPath, outputFilescopyPath);
+const copyDir = function (src, dest) {
+	return [dest].forEach(v => {
+		fs.access(v, err => {
+			if (err) {
+				fs.mkdir(v, {recursive: true}, err => {
+					if (err) throw err;
+					mv(src, dest);
+				});
+			} else {
+				fs.rm(v, {recursive: true, force: true}, () => {
+					fs.mkdir(v, {recursive: true}, err => {
+						if (err) throw err;
+						mv(src, dest);
+					});
+				});
+			}
+		});
+	});
+};
+
+copyDir(inputFilesPath, outputFilescopyPath);
+
