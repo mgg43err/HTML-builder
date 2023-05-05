@@ -9,7 +9,7 @@ fs.promises.readdir(SECRET_FOLDER, {withFileTypes:true})
                 fs.stat(path.join(SECRET_FOLDER  +x.name ), (e, s) => {
                     if (e) { console.log(e) }
                     else {
-                        console.log(x.name, path.parse(SECRET_FOLDER  +x.name).ext, (s.size/1024).toFixed(3) +"kb" );
+                        console.log(x.name, "-", path.parse(SECRET_FOLDER  +x.name).ext, "-", (s.size/1024).toFixed(3) +"kb" );
                     }
                 }) :
                 "";                    
