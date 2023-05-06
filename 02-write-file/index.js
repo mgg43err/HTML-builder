@@ -1,7 +1,7 @@
-const fs = require("fs");
-const readline = require("readline");
-const path = require("path");
-const process = require("process");
+const fs = require("node:fs");
+const readline = require("node:readline");
+const path = require("node:path");
+const process = require("node:process");
 const ws = fs.createWriteStream(path.join(__dirname + "/out.txt"));
 const rl = readline.createInterface({
 	input: process.stdin,
