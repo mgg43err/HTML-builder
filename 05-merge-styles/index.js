@@ -5,20 +5,14 @@ const outputpath = path.join(__dirname + "/project-dist/bundle.css");
 const inputdir = path.join(__dirname + "/styles/");
 
 function bundleExistCheck(src) {
-	fs.stat(src, callback=(e,s)=>{
-		if(e){
-			return false;
-		}
-		else{
-			return true;
-		}
-	})
-/* 	fs.access(src, err => {
+ 	fs.access(src, err => {
 		if (err) {
-			console.error(err);
+			return false
+		}
+		else {
+			return true
 		}
 	});
-	return true; */
 }
 
 function bundle(src, dest) {
