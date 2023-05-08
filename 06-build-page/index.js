@@ -1,5 +1,5 @@
-const path = require('path');
-const {readFile, writeFile, readdir, copyFile, mkdir} = require('fs/promises');
+const path = require('node:path');
+const {readFile, writeFile, readdir, copyFile, mkdir} = require('node:fs/promises');
 
 const pathDistDir = path.resolve(__dirname, 'project-dist');
 const pathTemplate = path.resolve(__dirname, 'template.html');
