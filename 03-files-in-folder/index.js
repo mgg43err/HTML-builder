@@ -13,7 +13,7 @@ fsp
               console.log(e);
             } else {
               console.log(
-                x.name,
+                `${x.name.split('.')[0]}`,
                 "-",
                 path.parse(SECRET_FOLDER + x.name).ext,
                 "-",
